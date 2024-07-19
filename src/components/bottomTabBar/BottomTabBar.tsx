@@ -1,10 +1,21 @@
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React from 'react';
 import {useBottomTabController} from './BottomTabBarController';
 import {colors} from '../../constants/colors';
 import Animated from 'react-native-reanimated';
 import {fonts} from '../../constants/fonts';
 
+const android_ripple = {
+  borderless: false,
+  foreground: true,
+  color: colors.green,
+};
 const BottomTabBar = () => {
   const {BottomTabData, onLayout, requestTabChange, activeTab, rTabStyle} =
     useBottomTabController();
@@ -17,41 +28,31 @@ const BottomTabBar = () => {
         {BottomTabData.map((item, index) => {
           const {Icon} = item;
           const showIndicator = index === 0;
-
+          const activeTabStyle =
+            activeTab === item.screenName ? colors.green : '';
           return (
-            <React.Fragment key={index}>
-              <TouchableWithoutFeedback
-                onPress={() => requestTabChange(item.screenName)}>
-                <View
-                  style={styles.tabItem}
-                  onLayout={e => onLayout(e, item.screenName)}>
-                  <View>
-                    {/* {console.log(item.screenName)} */}
-                    <Icon
-                      height={24}
-                      width={24}
-                      activeColor={
-                        activeTab === item.screenName ? colors.green : ''
-                      }
-                    />
-                  </View>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.labelStyle,
-                      activeTab === item.screenName && {
-                        color: colors.green,
-                        ...fonts.ibmPlexMonoBold16,
-                      },
-                    ]}>
-                    {item.label}
-                  </Text>
-                  {showIndicator && (
-                    <Animated.View style={[styles.tabIndicator, rTabStyle]} />
-                  )}
-                </View>
-              </TouchableWithoutFeedback>
-            </React.Fragment>
+            <Pressable
+              key={index}
+              onPress={() => requestTabChange(item.screenName)}
+              style={styles.tabItem}
+              android_ripple={android_ripple}
+              onLayout={e => onLayout(e, item.screenName)}>
+              <View>
+                {/* {console.log(item.screenName)} */}
+                <Icon height={21} width={21} activeColor={activeTabStyle} />
+              </View>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.labelStyle,
+                  activeTab === item.screenName && styles.activeTab,
+                ]}>
+                {item.label}
+              </Text>
+              {showIndicator && (
+                <Animated.View style={[styles.tabIndicator, rTabStyle]} />
+              )}
+            </Pressable>
           );
         })}
       </View>
@@ -98,5 +99,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderTopColor: colors.green,
     borderRadius: 1,
+  },
+  activeTab: {
+    color: colors.green,
+    ...fonts.ibmPlexMonoBold16,
   },
 });

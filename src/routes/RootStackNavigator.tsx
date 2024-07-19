@@ -3,12 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackNavigatorList} from './RoutesType';
 import BottomStackNavigator from './BottomStackNavigator';
+import {navigationRef} from '../utils/utilities';
 
 const RootStack = createNativeStackNavigator<RootStackNavigatorList>();
 
 const RootStackNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator
         screenOptions={{
           headerShown: false,

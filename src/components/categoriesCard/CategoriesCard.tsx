@@ -8,7 +8,7 @@ import {RectButton} from 'react-native-gesture-handler';
 
 const CategoriesCard = ({title = 'Title'}: ContentHEadingProps) => {
   return (
-    <RectButton rippleColor={'#E6F2F2'} style={styles.root}>
+    <RectButton rippleColor={colors.brightGray} style={styles.root}>
       <Text style={styles.text}>{title}</Text>
       <ArrowForward />
     </RectButton>

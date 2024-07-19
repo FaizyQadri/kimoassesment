@@ -1,9 +1,8 @@
 export const colors = {
   white: '#ffffff',
   black: '#000000',
-  bisque: '#FFE4C1',
-  fawn: '#DEA96A',
-  wheat: '#EFD4B4',
+  richBlack: '#073838',
+  brightGray: '#E6F2F2',
   transparent: '#82bc0000 ',
   green: '#008080',
 };
